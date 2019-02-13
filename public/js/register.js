@@ -1,4 +1,4 @@
-layui.use(['element', "layer"], function(){
+layui.use(['element', 'layer'], function(){
   const element = layui.element;
   const layer = layui.layer
   const $ = layui.$
@@ -12,8 +12,6 @@ layui.use(['element', "layer"], function(){
     let username = $username.val()
     if(val.length < 6)return
   }) */
-
-  
 
   $password2.on("blur", function(){
     const pwd = $password.val()

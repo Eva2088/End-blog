@@ -17,6 +17,7 @@
             a(href="/") 关于博主
         //- 用户登录按钮
         ul.layui-nav.blog-user
+        
           if session && !session.isNew
             li.layui-nav-item
               a(href=session.role > 1 ? "/admin/user": "/admin/article") 个人中心
