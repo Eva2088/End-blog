@@ -5,12 +5,27 @@ const router = require('./routers/router')
 // const logger = require('koa-logger')
 const body = require('koa-body')
 const { join } = require('path')
+const session = require('koa-session')
 
 // 生成 Koa 实例
 const app = new Koa
 
+app.keys = ['some secret hurr']
+
+// session 的配置对象
+const CONFIG = {
+    key: "Sid",
+    maxAge: 36e5, /** 过期时间 */
+    overwrite: true, /** 是否覆盖 (default true) */
+    httpOnly: true, /** 是否能让客户端访问 (default true) */
+    signed: true, /** 是否签名 (default true) */
+    rolling: true, /** 是否每操作一次就刷新延长一次过期时间 (default is false) */
+}
 // 注册日志模块
 // app.use(logger())
+
+// 注册 session
+app.use(session(CONFIG, app))
 
 // 配置 koa-body 处理 post 请求数据
 app.use(body())

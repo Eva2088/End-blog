@@ -82,8 +82,32 @@ exports.login = async (ctx) => {
                 status: "密码不正确，登录失败"
             })
         }
+
+        // 让用户在他的 cookie 里设置 username password 加密后的密码 权限
+        ctx.cookies.set("username", username, {
+            domain: "localhost",
+            path: "/",
+            maxAge: 36e5,
+            httpOnly: true, // 不让客户端访问该 cookie
+            overwrite: false, // 不覆盖
+        })
+
+        // 用户在数据库的 _id 值
+        ctx.cookies.set("uid", data[0]._id, {
+            domain: "localhost",
+            path: "/",
+            maxAge: 36e5,
+            httpOnly: true, // 不让客户端访问该 cookie
+            overwrite: false, // 不覆盖
+        })
+
+        // ctx.session = null // 手动过期
+        ctx.session = {
+            username,
+            uid: data[0]._id
+        }
+
         // 登录成功
-        
         await ctx.render('isOk', {
             status: "登录成功"
         })
@@ -93,4 +117,31 @@ exports.login = async (ctx) => {
             status: "登录失败"
         })
     })
+}
+
+// 确定用户状态 保持用户的登录状态
+exports.keepLog = async (ctx, next) => {
+    // ctx.session.isNew = true 代表没登录， ctx.session.isNew = undefined 代表登录
+    if(ctx.session.isNew){ // session 没有
+        if(ctx.cookies.get("username")){
+            ctx.session = {
+                username: ctx.cookies.get("username"),
+                uid: ctx.cookies.get("uid")
+            }
+        }
+    }
+    await next()
+}
+
+// 用户退出的中间件
+exports.logout = async (ctx) => {
+    ctx.session = null
+    ctx.cookies.set("username", null, {
+        maxAge: 0
+    })
+    ctx.cookies.set("uid", null, {
+        maxAge: 0
+    })
+    // 在后台重定向到 根页面
+    ctx.redirect("/")
 }
