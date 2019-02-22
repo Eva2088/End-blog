@@ -104,7 +104,8 @@ exports.login = async (ctx) => {
         // ctx.session = null // 手动过期
         ctx.session = {
             username,
-            uid: data[0]._id
+            uid: data[0]._id,
+            avatar: data[0].avatar
         }
 
         // 登录成功

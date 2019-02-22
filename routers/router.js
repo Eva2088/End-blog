@@ -2,17 +2,12 @@ const Router = require('koa-router')
 // 拿到操作 user 表的逻辑对象
 const user = require('../control/user')
 const article = require('../control/article')
+const comment = require('../control/comment')
 
 const router = new Router
 
 // 设计主页
-router.get("/", user.keepLog, async (ctx) => {
-    // 需要 title、 artical
-    await ctx.render("index", {
-        session: ctx.session,
-        title: "博客首页"
-    })
-})
+router.get("/", user.keepLog, article.getList)
 
 /* 
     对用户的动作  /user
@@ -52,5 +47,14 @@ router.get("/article", user.keepLog, article.addPage)
 
 // 文章添加 路由
 router.post("/article", user.keepLog, article.add)
+
+// 文章列表分页
+router.get("/page/:id", article.getList)
+
+// 文章详情页
+router.get("/article/:id", user.keepLog, article.details)
+
+// 发表评论
+router.post("/comment", user.keepLog, comment.addComment)
 
 module.exports = router

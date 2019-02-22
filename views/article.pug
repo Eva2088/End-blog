@@ -38,30 +38,28 @@ block contents
           //- 文章内容
           div(style="padding:10px;").article-detail!= article.content
             
-
-
-        //- 评论
-        .comment.default-box
-          fieldset.text-center
-              legend 评论
-          div.txt
-            <textarea id="comment-txt"></textarea>
-            button.layui-btn 回复
-          ul.comment-list
-            //- li
-            //-   img(src="/img/1.jpg")
-            //-   div
-            //-     p.author comment.username
-            //-     p.time 2018-06-29 13:19:13
-            //-   .she-said.
-            //-     这是评论的内容
-            each info in comment
-              li
-                img(src=info.from.avatar)
-                div
-                  p.author= info.from.username
-                  p.time= info.created.toLocaleString()
-                .she-said!= info.content
+            //- 评论
+            .comment.default-box
+              fieldset.text-center
+                  legend 评论
+              div.txt
+                <textarea id="comment-txt"></textarea>
+                button.layui-btn 回复
+              ul.comment-list
+                //- li
+                //-   img(src="/img/1.jpg")
+                //-   div
+                //-     p.author comment.username
+                //-     p.time 2018-06-29 13:19:13
+                //-   .she-said.
+                //-     这是评论的内容
+                each info in comment
+                  li
+                    img(src=info.from.avatar)
+                    div
+                      p.author= info.from.username
+                      p.time= info.created.toLocaleString()
+                    .she-said!= info.content
 
       //- 右侧公告
       include ./layout/right_tag
