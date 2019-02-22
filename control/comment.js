@@ -42,7 +42,17 @@ exports.addComment = async ctx => {
                     {$inc: {commentNum: 1}},
                     err => {
                         if(err) return console.log(err)
-                        console.log("评论计数器更新成功")
+                        // console.log("评论计数器更新成功")
+                    }
+                )
+
+            // 跟新用户的评论数量
+            User
+                .update(
+                    {_id: data.from},
+                    {$inc: {commentNum: 1}},
+                    err => {
+                        if(err) return console.log(err)
                     }
                 )
         })

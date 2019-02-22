@@ -24,7 +24,9 @@ exports.reg = async (ctx) => {
             // 保存到数据库之前需要先加密，encrypt模块是自定义加密模块
             const _user = new User({
                 username,
-                password: encrypt(password)
+                password: encrypt(password),
+                articleNum: 0,
+                commentNum: 0
             })
             
             _user.save((err, data) => {
@@ -105,7 +107,8 @@ exports.login = async (ctx) => {
         ctx.session = {
             username,
             uid: data[0]._id,
-            avatar: data[0].avatar
+            avatar: data[0].avatar,
+            role: data[0].role
         }
 
         // 登录成功

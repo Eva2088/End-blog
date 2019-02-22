@@ -41,6 +41,15 @@ exports.add = async (ctx) => {
             if(err){
                 return reject(err)
             }
+            // 更新用户文章基数
+            User
+                .update(
+                    {_id: data.author},
+                    {$inc: {articleNum: 1}},
+                    err => {
+                        if(err) return console.log(err)
+                    }
+                )
             resolve(data)
         })
     })
