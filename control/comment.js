@@ -65,3 +65,50 @@ exports.addComment = async ctx => {
 
     ctx.body = message
 }
+
+// 后台：查询用户所有评论
+exports.comList = async ctx => {
+    const uid = ctx.session.uid
+    const data = await Comment.find({from: uid}).populate("artical", "title")
+
+    ctx.body = {
+        code: 0,
+        count: data.length,
+        data
+    }
+}
+
+// 删除对应 ID 的评论
+exports.comDel = async ctx => {
+    const commentId = ctx.params.id
+
+    let articleId, uid
+    let isOk = true  
+    
+    // 删除评论
+    await Comment.findById(commentId, (err, data) => {
+        if(err){
+            console.log(err)
+            isOk = false
+            return 
+        }else{
+            articleId = data.article
+            uid = data.from
+        }
+    })
+
+    // 让文章的计数器 -1
+    await Article.update({_id: articleId}, {$inc: {commentNum: -1}})
+
+    await User.update({_id: uid}, {$inc: {commentNum: -1}})
+
+    await Comment.deleteOne({_id: commentId})
+
+    if(isOk){
+        ctx.body = {
+            state: 1,
+            message: "删除成功"
+        }
+    }
+    
+}

@@ -11,7 +11,7 @@ const CommentSchema = new Schema({
         type: ObjectId,
         ref: "users"
     },
-    // 关联到 article 表 --》 集合 
+    // 关联到 article 集合 
     article: {
         type: ObjectId,
         ref: "articles"

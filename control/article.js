@@ -129,3 +129,26 @@ exports.details = async (ctx) => {
         comment
     })
 }
+
+// 返回用户所有文章
+exports.artList = async ctx => {
+    const uid = ctx.session.uid
+    const data = await Article.find({author: uid})
+
+    ctx.body = {
+        code: 0,
+        count: data.length,
+        data
+    }
+}
+
+// 删除对应 ID 的文章
+exports.artDel = async ctx => {
+    // const _id = ctx.params.id
+    // let uid
+    // let res = {}
+
+    // // 删除文章
+    // 删除文章对应的所有评论
+    // 被删除评论对应的用户 commentNum - 1
+}

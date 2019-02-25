@@ -1,7 +1,7 @@
 extends ./admin
 
 block main
-  table(lay-data="{width: 892, url:'/user/articles', page:true, id:'idTest'}", lay-filter="demo").layui-table
+  table(lay-data="{url:'/user/articles', page:true, id:'idTest'}", lay-filter="demo").layui-table
     thead
       tr
         th(lay-data="{field:'title', align:'center'}") 文章

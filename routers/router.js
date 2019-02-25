@@ -4,6 +4,7 @@ const user = require('../control/user')
 const article = require('../control/article')
 const comment = require('../control/comment')
 const admin = require('../control/admin')
+const upload = require('../util/upload')
 
 const router = new Router
 
@@ -60,6 +61,22 @@ router.post("/comment", user.keepLog, comment.addComment)
 
 // 后台管理：文章、评论、头像上传
 router.get("/admin/:id", user.keepLog, admin.index)
+
+// 头像上传
+router.post("/upload", user.keepLog, upload.single('file'), user.upload)
+
+// 获取用户的所有评论
+router.get("/user/comments", user.keepLog, comment.comList)
+
+// 删除评论
+router.del("/comment/:id", user.keepLog, comment.comDel)
+
+// 获取用户的所有评论
+router.get("/user/articles", user.keepLog, article.artList)
+
+// 删除评论
+router.del("/article/:id", user.keepLog, article.artDel)
+
 
 
 // 404
