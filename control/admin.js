@@ -1,15 +1,6 @@
-const { db } = require('../Schema/connect')
-
-// 取用户的 Schema， 为了拿到操作 users 集合的实例对象
-const UserSchema = require('../Schema/user')
-const User = db.model("users", UserSchema)
-
-// 通过 db 对象创建操作 article 数据库的模型对象
-const ArticleSchema = require('../Schema/article')
-const Article = db.model("articles", ArticleSchema)
-
-const CommentSchema = require('../Schema/comment')
-const Comment = db.model("comments", CommentSchema)
+const Article = require('../Models/article')
+const User = require('../Models/user')
+const Comment = require('../Models/comment')
 
 const fs = require('fs')
 const { join } = require('path')

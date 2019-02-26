@@ -71,7 +71,7 @@ router.get("/user/comments", user.keepLog, comment.comList)
 // 删除评论
 router.del("/comment/:id", user.keepLog, comment.comDel)
 
-// 获取用户的所有评论
+// 获取用户的所有文章
 router.get("/user/articles", user.keepLog, article.artList)
 
 // 删除评论
